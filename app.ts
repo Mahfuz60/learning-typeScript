@@ -268,3 +268,95 @@ const players:Player[]=[
 
 const person=getOldest(players);
 // console.log(person)
+
+
+//Generics function link passing function
+
+interface IPost{
+  id:number;
+  title:string;
+  body:string;
+}
+
+interface IUser{
+  id:number;
+  title:string;
+  body:string;
+}
+
+// const fetchPostData=async(path:string):Promise<IPost[]> =>{
+//   const response=await fetch(`https://jsonplaceholder.typicode.com${path}`);
+//   return response.json();
+
+// }
+
+// const fetchUserData=async(path:string):Promise<IUser[]> =>{
+//   const response=await fetch(`https://jsonplaceholder.typicode.com${path}`);
+//   return response.json();
+
+// }
+
+
+const fetchData=async<ResultType>(path:string):Promise<ResultType>=>{
+  const response=await fetch(`https://jsonplaceholder.typicode.com${path}`);
+  return response.json();
+
+}
+
+(async()=>{
+  // const posts=await fetchPostData('/posts');
+  // posts[0].body;
+
+  // const users=await fetchUserData('/users');
+  // users[0].id;
+
+
+  // const users=await fetchData<IUser[]>('/posts');
+  // users[0].id
+  const posts=await fetchData<IPost[]>('/posts');
+  posts[0].body;
+
+
+
+})();
+
+
+//structural typing or duck typing
+
+interface ICredential{
+  userName:String;
+  password:String;
+  isAdmin?:boolean;
+}
+
+function login(credential:ICredential):boolean{
+  // console.log(credential);
+  return true;
+
+}
+
+const users:ICredential={
+  userName:'Ahmed Furuk',
+  password:'secret1234',
+  isAdmin:true
+
+}
+login(users)
+
+
+//passing function with argument
+
+interface IAuth{
+  userName:string;
+  password:string;
+  login(userName:string,password:string):boolean;
+}
+
+const auth:IAuth={
+  userName:'Hasibur Rahman',
+  password:'secret12345',
+  login(userName:string,password:string){
+    return true;
+
+  }
+}
